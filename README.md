@@ -57,9 +57,9 @@ Ensure you have the following installed:
 ## Preview
 
 <div style={{display: "flex", flexDirection: "row"}}>
-   <img src = "https://github.com/user-attachments/assets/31effd05-4709-48f2-92c4-e5af2a53a22d" width=300 height=auto />
-   <img src = "https://github.com/user-attachments/assets/43be6dcf-a638-4860-8766-80098860bf4c"width=300 height=auto />
-   <img src = "https://github.com/user-attachments/assets/be8b5641-7e9d-42f1-bbc9-79c9553a6050"width=300 height=auto />
+   <img src = "https://github.com/user-attachments/assets/31effd05-4709-48f2-92c4-e5af2a53a22d" width=250 height=auto />
+   <img src = "https://github.com/user-attachments/assets/43be6dcf-a638-4860-8766-80098860bf4c"width=250 height=auto />
+   <img src = "https://github.com/user-attachments/assets/be8b5641-7e9d-42f1-bbc9-79c9553a6050"width=250 height=auto />
 </div>
 
 

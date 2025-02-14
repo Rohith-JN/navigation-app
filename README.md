@@ -1,50 +1,65 @@
-# Welcome to your Expo app 👋
+# Navigation App
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+## Overview
+This is a **React Native Expo** application that allows users to:
+- View their **current location** on a map.
+- **Search for locations** using OpenStreetMap's Nominatim API.
+- Display a **route from the user's location to the searched location** using Google Maps Directions API.
 
-## Get started
+## Features
+- **User Location Tracking:** Automatically detects and displays the user's location.
+- **Search Functionality:** Users can enter a location name, and the app finds and displays it on the map.
+- **Dynamic Routing:** Draws a route between the user’s location and the searched location.
+- **Interactive Map:** Supports zooming and panning.
+- **Marker Customization:** User location is marked in blue, and the searched location is marked with a pin.
 
-1. Install dependencies
+## Prerequisites
+Ensure you have the following installed:
+- **Expo CLI** (`npm install -g expo-cli`)
+- **Google Maps API Key** (for Directions API usage)
 
-   ```bash
+## Setup Instructions
+
+1. **Clone the Repository**
+   ```sh
+   git clone https://github.com/Rohith-JN/navigation-app.git
+   cd navigation-app
+   ```
+
+2. **Install Dependencies**
+   ```sh
    npm install
    ```
 
-2. Start the app
+3. **Add Your Google Maps API Key**
+   - Open `Index.tsx`.
+   - Replace the placeholder key in:
+     ```tsx
+     const GOOGLE_MAPS_API_KEY = 'YOUR_GOOGLE_MAPS_API_KEY';
+     ```
 
-   ```bash
-    npx expo start
+4. **Run the App**
+   ```sh
+   npm run start
    ```
 
-In the output, you'll find options to open the app in a
+5. **Test on a Physical Device**
+   - Install the **Expo Go** app on your Android/iOS device.
+   - Scan the QR code generated in the terminal after running `npm run start`.
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+## Technologies Used
+- **React Native** (with Expo)
+- **react-native-maps** (for map rendering)
+- **react-native-maps-directions** (for route drawing)
+- **OpenStreetMap Nominatim API** (for location search)
+- **Google Maps Directions API** (for route generation)
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+## Preview
 
-## Get a fresh project
+<div style={{display: "flex", flexDirection: "row"}}>
+   <img src = "https://github.com/user-attachments/assets/31effd05-4709-48f2-92c4-e5af2a53a22d" width=300 height=auto />
+   <img src = "https://github.com/user-attachments/assets/43be6dcf-a638-4860-8766-80098860bf4c"width=300 height=auto />
+   <img src = "https://github.com/user-attachments/assets/be8b5641-7e9d-42f1-bbc9-79c9553a6050"width=300 height=auto />
+</div>
 
-When you're ready, run:
 
-```bash
-npm run reset-project
-```
-
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
-
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.

@@ -5,6 +5,7 @@ import {
   Keyboard,
   KeyboardAvoidingView,
   TextInput,
+  TouchableOpacity,
 } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import { useState, useEffect, useRef } from 'react';
@@ -12,14 +13,14 @@ import { Stack } from 'expo-router';
 import * as Location from 'expo-location';
 import MapViewDirections from 'react-native-maps-directions';
 
-const GOOGLE_MAPS_API_KEY = ''
+const GOOGLE_MAPS_API_KEY = '';
 
 const Index = () => {
   const [userLocation, setUserLocation] = useState<{ latitude: number; longitude: number } | null>(null);
   const [searchedLocation, setSearchedLocation] = useState<{ latitude: number; longitude: number } | null>(null);
-  const [errorMsg, setErrorMsg] = useState<String>("");
-  const mapRef = useRef<MapView>(null);
+  const [errorMsg, setErrorMsg] = useState<string>('');
   const [value, setValue] = useState('');
+  const mapRef = useRef<MapView>(null);
 
   async function searchLocation(query: string) {
     try {
@@ -46,6 +47,25 @@ const Index = () => {
     }
   }
 
+  function fitMarkers() {
+    if (userLocation && searchedLocation && mapRef.current) {
+      mapRef.current.fitToCoordinates([userLocation, searchedLocation], {
+        edgePadding: { top: 50, right: 50, bottom: 50, left: 50 },
+        animated: true,
+      });
+    }
+  }
+
+  const [directionsReady, setDirectionsReady] = useState(false);
+
+  useEffect(() => {
+    if (searchedLocation) {
+      setDirectionsReady(false); // Reset before updating
+      setTimeout(() => setDirectionsReady(true), 100); // Small delay to trigger re-render
+    }
+  }, [searchedLocation]);
+
+
   useEffect(() => {
     (async () => {
       let { status } = await Location.requestForegroundPermissionsAsync();
@@ -67,24 +87,21 @@ const Index = () => {
       <KeyboardAvoidingView behavior="padding" style={{ flex: 1 }}>
         <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
           <View style={{ flex: 1 }}>
-            <View style={{ height: '80%' }}>
+            <View style={{ height: '75%' }}>
               <MapView
                 ref={mapRef}
                 style={{ flex: 1 }}
-                region={{
+                initialRegion={{
                   latitude: userLocation.latitude,
                   longitude: userLocation.longitude,
                   latitudeDelta: 0.0052,
                   longitudeDelta: 0.0051,
                 }}
               >
-
-                <Marker
-                  coordinate={userLocation}
-                  pinColor="blue"
-                />
+                <Marker coordinate={userLocation} pinColor="blue" />
                 {searchedLocation && <Marker coordinate={searchedLocation} title="Searched Location" />}
-                {userLocation && searchedLocation && (
+
+                {searchedLocation && directionsReady && (
                   <MapViewDirections
                     origin={userLocation}
                     destination={searchedLocation}
@@ -96,26 +113,42 @@ const Index = () => {
                 )}
               </MapView>
             </View>
-            <View style={{ height: '20%' }}>
+
+            <View style={{ height: '25%', padding: 12 }}>
               <TextInput
                 style={{
                   height: 40,
-                  margin: 12,
+                  marginBottom: 10,
                   borderWidth: 1,
                   padding: 10,
                   backgroundColor: '#DDDDDF',
                   borderRadius: 8,
                   fontSize: 16,
-                  paddingLeft: 15,
                 }}
-                placeholder='Search for a location!'
-                placeholderTextColor={'grey'}
+                placeholder="Search for a location!"
+                placeholderTextColor="grey"
                 onChangeText={setValue}
                 value={value}
                 onSubmitEditing={() => searchLocation(value)}
                 spellCheck={false}
                 autoCorrect={false}
               />
+
+              {searchedLocation && (
+                <TouchableOpacity
+                  style={{
+                    backgroundColor: 'black',
+                    padding: 12,
+                    borderRadius: 8,
+                    alignItems: 'center',
+                  }}
+                  onPress={() => {
+                    fitMarkers();
+                  }}
+                >
+                  <Text style={{ color: 'white', fontSize: 16 }}>Get Directions</Text>
+                </TouchableOpacity>
+              )}
             </View>
           </View>
         </TouchableWithoutFeedback>
@@ -129,15 +162,10 @@ const Index = () => {
             headerShown: false,
           }}
         />
-        {errorMsg ? (
-          <Text>{errorMsg}</Text>
-        ) : (
-          <Text>Waiting for location...</Text>
-        )}
+        {errorMsg ? <Text>{errorMsg}</Text> : <Text>Waiting for location...</Text>}
       </View>
     );
   }
 };
 
-export default Index
-
+export default Index;
